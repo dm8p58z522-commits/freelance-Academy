@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فريلانس أكاديمي - ابدأ مسيرتك الحرة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F5C842;
+    --gold-light: #FFE17A;
+    --dark: #0A0A0F;
+    --dark2: #12121A;
+    --dark3: #1A1A26;
+    --card: #16162A;
+    --accent: #7C3AED;
+    --accent2: #A855F7;
+    --teal: #06B6D4;
+    --green: #10B981;
+    --red: #EF4444;
+    --text: #E8E8F0;
+    --muted: #8888AA;
+    --border: rgba(255,255,255,0.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ---- NOISE TEXTURE ---- */
+  body::before {
+    content:'';
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+  }
+
+  /* ---- NAVBAR ---- */
+  nav {
+    position: fixed; top:0; width:100%; z-index:100;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex; align-items:center; justify-content:space-between;
+    height: 72px;
+  }
+  .logo {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1.6rem; font-weight: 800;
+    background: linear-gradient(135deg, var(--gold), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--gold); -webkit-text-fill-color: var(--gold); }
+  nav ul { list-style:none; display:flex; gap:2rem; }
+  nav ul li a {
+    text-decoration:none; color:var(--muted); font-size:0.95rem; font-weight:600;
+    transition: color 0.2s; position:relative; padding-bottom:4px;
+  }
+  nav ul li a::after {
+    content:''; position:absolute; bottom:0; right:0; width:0; height:2px;
+    background: var(--gold); transition: width 0.3s;
+  }
+  nav ul li a:hover { color:var(--gold); }
+  nav ul li a:hover::after { width:100%; }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--gold), #E8A500);
+    color: var(--dark) !important;
+    padding: 0.5rem 1.4rem; border-radius: 50px; font-weight: 700 !important;
+    -webkit-text-fill-color: var(--dark) !important;
+    transition: transform 0.2s, box-shadow 0.2s !important;
+  }
+  .nav-cta:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(245,200,66,0.4) !important; }
+  .nav-cta::after { display:none !important; }
+
+  /* ---- HERO ---- */
+  .hero {
+    min-height: 100vh; position:relative;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center; padding: 120px 5% 80px;
+    overflow:hidden;
+  }
+  .hero-bg {
+    position:absolute; inset:0; z-index:0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,58,237,0.25) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(245,200,66,0.1) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 40% at 10% 60%, rgba(6,182,212,0.08) 0%, transparent 60%);
+  }
+  .floating-shapes {
+    position:absolute; inset:0; z-index:0; pointer-events:none;
+  }
+  .shape {
+    position:absolute; border-radius:50%;
+    animation: floatShape 8s ease-in-out infinite;
+  }
+  .shape:nth-child(1){ width:300px;height:300px;top:-80px;right:-80px;
+    background:radial-gradient(circle, rgba(124,58,237,0.15), transparent 70%); animation-delay:0s;}
+  .shape:nth-child(2){ width:200px;height:200px;bottom:10%;left:5%;
+    background:radial-gradient(circle, rgba(245,200,66,0.1), transparent 70%); animation-delay:3s;}
+  .shape:nth-child(3){ width:150px;height:150px;top:40%;right:5%;
+    background:radial-gradient(circle, rgba(6,182,212,0.1), transparent 70%); animation-delay:5s;}
+  @keyframes floatShape {
+    0%,100%{transform:translateY(0) scale(1);}
+    50%{transform:translateY(-30px) scale(1.05);}
+  }
+  .hero-content { position:relative; z-index:1; max-width:900px; }
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    background: rgba(245,200,66,0.1); border:1px solid rgba(245,200,66,0.3);
+    color: var(--gold); padding:0.5rem 1.2rem; border-radius:50px;
+    font-size:0.9rem; font-weight:600; margin-bottom:2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge::before { content:'✦'; font-size:0.8rem; }
+  h1.hero-title {
+    font-family: 'Tajawal', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800; line-height: 1.2;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  h1.hero-title .highlight {
+    background: linear-gradient(135deg, var(--gold), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.25rem); color: var(--muted);
+    max-width: 640px; margin: 0 auto 3rem; line-height:1.8;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-actions {
+    display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold), #E8A500);
+    color: var(--dark); padding: 0.9rem 2.5rem;
+    border-radius:50px; font-weight:700; font-size:1.05rem;
+    border:none; cursor:pointer; text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(245,200,66,0.3);
+  }
+  .btn-primary:hover { transform:translateY(-3px); box-shadow:0 10px 35px rgba(245,200,66,0.5); }
+  .btn-secondary {
+    background: transparent; color: var(--text);
+    padding: 0.9rem 2.5rem; border-radius:50px;
+    border:1px solid var(--border); font-weight:600; font-size:1.05rem;
+    cursor:pointer; text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); }
+  .hero-stats {
+    display:flex; gap:3rem; justify-content:center; flex-wrap:wrap;
+    margin-top:4rem; padding-top:3rem;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .stat { text-align:center; }
+  .stat-num {
+    font-family:'Tajawal', sans-serif;
+    font-size:2.2rem; font-weight:800;
+    background:linear-gradient(135deg,var(--gold),var(--accent2));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .stat-label { color:var(--muted); font-size:0.9rem; margin-top:4px; }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(30px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+
+  /* ---- SECTION COMMONS ---- */
+  section { padding:100px 5%; position:relative; }
+  .section-tag {
+    display:inline-flex; align-items:center; gap:6px;
+    color:var(--gold); font-size:0.85rem; font-weight:700; letter-spacing:2px;
+    text-transform:uppercase; margin-bottom:1rem;
+  }
+  .section-tag::before { content:''; width:24px; height:2px; background:var(--gold); display:inline-block; }
+  .section-title {
+    font-family:'Tajawal',sans-serif;
+    font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; line-height:1.3;
+    margin-bottom:1rem;
+  }
+  .section-title .g { background:linear-gradient(135deg,var(--gold),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .section-sub { color:var(--muted); font-size:1.05rem; max-width:600px; line-height:1.8; margin-bottom:3rem; }
+
+  /* ---- SKILL SELECTOR ---- */
+  #skills { background: var(--dark2); }
+  .skill-search-wrap {
+    position:relative; max-width:600px; margin-bottom:3rem;
+  }
+  .skill-search {
+    width:100%; padding:1rem 1.5rem 1rem 3.5rem;
+    background: var(--card); border:1px solid var(--border);
+    border-radius:16px; color:var(--text); font-family:'Cairo',sans-serif;
+    font-size:1rem; outline:none; transition:border-color 0.2s, box-shadow 0.2s;
+  }
+  .skill-search:focus { border-color: rgba(245,200,66,0.5); box-shadow:0 0 0 3px rgba(245,200,66,0.1); }
+  .skill-search::placeholder { color:var(--muted); }
+  .search-icon {
+    position:absolute; left:1.2rem; top:50%; transform:translateY(-50%);
+    color:var(--muted); font-size:1.1rem;
+  }
+  .skill-categories {
+    display:flex; gap:0.75rem; flex-wrap:wrap; margin-bottom:2rem;
+  }
+  .cat-btn {
+    padding:0.5rem 1.2rem; border-radius:50px;
+    border:1px solid var(--border); background:transparent;
+    color:var(--muted); cursor:pointer; font-family:'Cairo',sans-serif;
+    font-size:0.9rem; font-weight:600; transition:all 0.2s;
+  }
+  .cat-btn:hover, .cat-btn.active {
+    background: rgba(245,200,66,0.1);
+    border-color: rgba(245,200,66,0.4); color:var(--gold);
+  }
+  .skills-grid {
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:1rem;
+  }
+  .skill-card {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:16px; padding:1.5rem; cursor:pointer;
+    transition:all 0.25s; position:relative; overflow:hidden;
+    display:flex; flex-direction:column; gap:0.75rem;
+  }
+  .skill-card::before {
+    content:''; position:absolute; inset:0; opacity:0;
+    background: linear-gradient(135deg, var(--accent), transparent 60%);
+    transition:opacity 0.3s;
+  }
+  .skill-card:hover { border-color: rgba(245,200,66,0.3); transform:translateY(-4px); }
+  .skill-card:hover::before { opacity:0.1; }
+  .skill-card.selected { border-color:var(--gold); background:rgba(245,200,66,0.05); }
+  .skill-icon { font-size:2rem; }
+  .skill-name { font-weight:700; font-size:0.95rem; }
+  .skill-demand {
+    font-size:0.8rem; color:var(--green); font-weight:600;
+    display:flex; align-items:center; gap:4px;
+  }
+  .skill-demand::before { content:'↑'; }
+  .skill-avg { font-size:0.8rem; color:var(--muted); }
+
+  /* ---- ROADMAP ---- */
+  #roadmap { background:var(--dark); }
+  .roadmap-container { display:none; }
+  .roadmap-container.active { display:block; animation:fadeUp 0.5s ease both; }
+  .roadmap-title {
+    display:flex; align-items:center; gap:1rem; margin-bottom:3rem;
+  }
+  .roadmap-title h3 { font-family:'Tajawal',sans-serif; font-size:1.6rem; font-weight:800; }
+  .roadmap-title .skill-badge {
+    background:linear-gradient(135deg,var(--gold),#E8A500);
+    color:var(--dark); padding:0.4rem 1rem; border-radius:50px;
+    font-size:0.9rem; font-weight:700;
+  }
+  .roadmap-steps {
+    display:grid; gap:1.5rem;
+  }
+  .roadmap-step {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:20px; padding:2rem;
+    display:flex; gap:2rem; align-items:flex-start;
+    transition:border-color 0.2s;
+  }
+  .roadmap-step:hover { border-color:rgba(124,58,237,0.3); }
+  .step-num {
+    width:48px; height:48px; border-radius:12px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:1.1rem; flex-shrink:0;
+  }
+  .step-content h4 { font-size:1.1rem; font-weight:700; margin-bottom:0.5rem; }
+  .step-content p { color:var(--muted); line-height:1.7; font-size:0.95rem; }
+  .step-duration {
+    margin-top:0.75rem; display:inline-flex; align-items:center; gap:6px;
+    background:rgba(6,182,212,0.1); color:var(--teal);
+    padding:0.3rem 0.8rem; border-radius:50px; font-size:0.8rem; font-weight:600;
+  }
+
+  /* ---- RESOURCES ---- */
+  #resources { background:var(--dark2); }
+  .resources-filter {
+    display:flex; gap:0.75rem; flex-wrap:wrap; margin-bottom:2.5rem;
+  }
+  .res-filter-btn {
+    padding:0.5rem 1.2rem; border-radius:50px;
+    border:1px solid var(--border); background:transparent;
+    color:var(--muted); cursor:pointer; font-family:'Cairo',sans-serif;
+    font-size:0.9rem; font-weight:600; transition:all 0.2s;
+  }
+  .res-filter-btn:hover, .res-filter-btn.active {
+    background:rgba(124,58,237,0.1); border-color:rgba(124,58,237,0.4); color:var(--accent2);
+  }
+  .resources-grid {
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1.5rem;
+  }
+  .resource-card {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:20px; overflow:hidden; transition:all 0.25s;
+    display:flex; flex-direction:column;
+  }
+  .resource-card:hover { transform:translateY(-5px); box-shadow:0 20px 40px rgba(0,0,0,0.4); border-color:rgba(255,255,255,0.15); }
+  .resource-thumb {
+    height:160px; display:flex; align-items:center; justify-content:center;
+    font-size:4rem; position:relative; overflow:hidden;
+  }
+  .resource-thumb::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(to top, var(--card), transparent);
+  }
+  .resource-body { padding:1.5rem; flex:1; display:flex; flex-direction:column; gap:0.75rem; }
+  .resource-type {
+    display:inline-flex; align-items:center; gap:6px;
+    padding:0.3rem 0.8rem; border-radius:50px; font-size:0.8rem; font-weight:700;
+  }
+  .type-free { background:rgba(16,185,129,0.15); color:var(--green); }
+  .type-paid { background:rgba(245,200,66,0.15); color:var(--gold); }
+  .type-arabic { background:rgba(124,58,237,0.15); color:var(--accent2); }
+  .resource-name { font-weight:700; font-size:1.05rem; line-height:1.4; }
+  .resource-desc { color:var(--muted); font-size:0.9rem; line-height:1.6; flex:1; }
+  .resource-meta { display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:1rem; border-top:1px solid var(--border); }
+  .resource-rating { display:flex; align-items:center; gap:4px; color:var(--gold); font-weight:600; font-size:0.9rem; }
+  .resource-link {
+    display:inline-flex; align-items:center; gap:6px;
+    background:rgba(255,255,255,0.05); border:1px solid var(--border);
+    color:var(--text); padding:0.4rem 1rem; border-radius:50px;
+    text-decoration:none; font-size:0.85rem; font-weight:600;
+    transition:all 0.2s;
+  }
+  .resource-link:hover { background:var(--gold); color:var(--dark); border-color:var(--gold); }
+
+  /* ---- FREELANCE GUIDE ---- */
+  #guide { background:var(--dark); }
+  .guide-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:2rem;
+  }
+  .guide-card {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:24px; padding:2.5rem; position:relative; overflow:hidden;
+    transition:all 0.3s;
+  }
+  .guide-card:hover { border-color:rgba(245,200,66,0.2); transform:translateY(-4px); }
+  .guide-card::before {
+    content:''; position:absolute; top:-40px; left:-40px;
+    width:120px; height:120px; border-radius:50%;
+    opacity:0.08;
+  }
+  .guide-card:nth-child(1)::before { background:var(--gold); }
+  .guide-card:nth-child(2)::before { background:var(--accent); }
+  .guide-card:nth-child(3)::before { background:var(--teal); }
+  .guide-card:nth-child(4)::before { background:var(--green); }
+  .guide-card:nth-child(5) { grid-column:1/-1; }
+  .guide-icon { font-size:2.5rem; margin-bottom:1.2rem; }
+  .guide-card h3 { font-size:1.25rem; font-weight:700; margin-bottom:0.75rem; }
+  .guide-card p { color:var(--muted); line-height:1.8; font-size:0.95rem; }
+  .guide-tips { margin-top:1.5rem; display:flex; flex-direction:column; gap:0.6rem; }
+  .guide-tip {
+    display:flex; align-items:flex-start; gap:0.75rem;
+    font-size:0.9rem; color:var(--text); line-height:1.6;
+  }
+  .guide-tip::before { content:'✓'; color:var(--green); font-weight:700; margin-top:2px; flex-shrink:0; }
+
+  /* ---- PLATFORMS ---- */
+  #platforms { background:var(--dark2); }
+  .platforms-grid {
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.5rem;
+  }
+  .platform-card {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:20px; padding:2rem; text-align:center;
+    transition:all 0.25s; cursor:pointer;
+  }
+  .platform-card:hover { border-color:rgba(245,200,66,0.3); transform:translateY(-4px); box-shadow:0 20px 40px rgba(0,0,0,0.3); }
+  .platform-logo { font-size:3rem; margin-bottom:1rem; }
+  .platform-name { font-size:1.2rem; font-weight:700; margin-bottom:0.5rem; }
+  .platform-desc { color:var(--muted); font-size:0.9rem; line-height:1.6; margin-bottom:1.5rem; }
+  .platform-features { display:flex; flex-direction:column; gap:0.5rem; text-align:right; }
+  .platform-feature {
+    display:flex; align-items:center; gap:0.5rem;
+    font-size:0.85rem; color:var(--muted);
+  }
+  .platform-feature::before { content:'←'; color:var(--gold); font-weight:700; }
+  .platform-link {
+    display:block; margin-top:1.5rem;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:white; padding:0.7rem 1.5rem; border-radius:50px;
+    text-decoration:none; font-weight:600; font-size:0.9rem;
+    transition:transform 0.2s, box-shadow 0.2s;
+  }
+  .platform-link:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(124,58,237,0.4); }
+
+  /* ---- AI ADVISOR ---- */
+  #advisor { background:var(--dark); }
+  .advisor-wrap {
+    max-width:800px; margin:0 auto;
+  }
+  .advisor-card {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:24px; overflow:hidden;
+  }
+  .advisor-header {
+    background:linear-gradient(135deg, rgba(124,58,237,0.2), rgba(245,200,66,0.1));
+    padding:2rem; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:1.5rem;
+  }
+  .advisor-avatar {
+    width:60px; height:60px; border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),var(--gold));
+    display:flex; align-items:center; justify-content:center; font-size:1.8rem;
+    flex-shrink:0;
+  }
+  .advisor-info h3 { font-size:1.3rem; font-weight:700; margin-bottom:0.25rem; }
+  .advisor-info p { color:var(--muted); font-size:0.9rem; }
+  .advisor-online {
+    display:inline-flex; align-items:center; gap:6px;
+    color:var(--green); font-size:0.8rem; font-weight:600; margin-top:0.25rem;
+  }
+  .advisor-online::before { content:''; width:8px; height:8px; border-radius:50%; background:var(--green); display:inline-block; animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.5;} }
+  .advisor-messages {
+    padding:2rem; min-height:300px; max-height:400px;
+    overflow-y:auto; display:flex; flex-direction:column; gap:1rem;
+  }
+  .msg {
+    max-width:80%; padding:1rem 1.5rem; border-radius:18px; font-size:0.95rem; line-height:1.7;
+  }
+  .msg-bot {
+    background:rgba(124,58,237,0.15); border:1px solid rgba(124,58,237,0.2);
+    align-self:flex-start; border-radius:4px 18px 18px 18px;
+  }
+  .msg-user {
+    background:rgba(245,200,66,0.1); border:1px solid rgba(245,200,66,0.2);
+    align-self:flex-end; border-radius:18px 4px 18px 18px;
+  }
+  .typing-indicator {
+    display:none; padding:1rem 1.5rem; background:rgba(124,58,237,0.15);
+    border-radius:4px 18px 18px 18px; align-self:flex-start;
+    width:70px;
+  }
+  .typing-indicator span {
+    display:inline-block; width:8px; height:8px; border-radius:50%;
+    background:var(--muted); margin:0 2px;
+    animation:typingBounce 1.4s infinite ease-in-out;
+  }
+  .typing-indicator span:nth-child(1){animation-delay:0s;}
+  .typing-indicator span:nth-child(2){animation-delay:0.2s;}
+  .typing-indicator span:nth-child(3){animation-delay:0.4s;}
+  @keyframes typingBounce { 0%,80%,100%{transform:translateY(0);}40%{transform:translateY(-8px);} }
+  .advisor-input-wrap {
+    padding:1.5rem; border-top:1px solid var(--border);
+    display:flex; gap:1rem; align-items:flex-end;
+  }
+  .advisor-input {
+    flex:1; background:var(--dark3); border:1px solid var(--border);
+    border-radius:16px; padding:0.9rem 1.2rem;
+    color:var(--text); font-family:'Cairo',sans-serif; font-size:0.95rem;
+    resize:none; outline:none; min-height:50px; max-height:120px;
+    transition:border-color 0.2s;
+  }
+  .advisor-input:focus { border-color:rgba(124,58,237,0.4); }
+  .advisor-input::placeholder { color:var(--muted); }
+  .send-btn {
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    border:none; border-radius:12px; padding:0.9rem 1.4rem;
+    color:white; cursor:pointer; font-size:1.1rem;
+    transition:transform 0.2s, box-shadow 0.2s;
+    height:50px; display:flex; align-items:center; justify-content:center;
+  }
+  .send-btn:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(124,58,237,0.4); }
+  .quick-questions {
+    padding:1rem 1.5rem; display:flex; gap:0.5rem; flex-wrap:wrap;
+    border-top:1px solid var(--border);
+  }
+  .quick-q {
+    background:rgba(255,255,255,0.05); border:1px solid var(--border);
+    color:var(--muted); padding:0.4rem 0.9rem; border-radius:50px;
+    font-size:0.82rem; cursor:pointer; font-family:'Cairo',sans-serif;
+    transition:all 0.2s;
+  }
+  .quick-q:hover { background:rgba(124,58,237,0.1); border-color:rgba(124,58,237,0.3); color:var(--accent2); }
+
+  /* ---- CALCULATOR ---- */
+  #calculator { background:var(--dark2); }
+  .calc-wrap {
+    display:grid; grid-template-columns:1fr 1fr; gap:2rem; max-width:900px;
+  }
+  .calc-form {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:24px; padding:2rem; display:flex; flex-direction:column; gap:1.5rem;
+  }
+  .calc-field label {
+    display:block; font-size:0.9rem; font-weight:600; color:var(--muted); margin-bottom:0.5rem;
+  }
+  .calc-field select, .calc-field input {
+    width:100%; background:var(--dark3); border:1px solid var(--border);
+    border-radius:12px; padding:0.8rem 1rem;
+    color:var(--text); font-family:'Cairo',sans-serif; font-size:0.95rem; outline:none;
+    transition:border-color 0.2s;
+  }
+  .calc-field select:focus, .calc-field input:focus { border-color:rgba(245,200,66,0.4); }
+  .calc-field select option { background:var(--dark3); }
+  .calc-btn {
+    background:linear-gradient(135deg,var(--gold),#E8A500);
+    color:var(--dark); border:none; border-radius:12px;
+    padding:0.9rem; font-family:'Cairo',sans-serif; font-size:1rem;
+    font-weight:700; cursor:pointer; transition:transform 0.2s, box-shadow 0.2s;
+  }
+  .calc-btn:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(245,200,66,0.4); }
+  .calc-result {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:24px; padding:2rem; display:flex; flex-direction:column; gap:1.5rem;
+  }
+  .calc-result h4 { font-size:1.1rem; font-weight:700; color:var(--muted); }
+  .result-item {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1rem; background:var(--dark3); border-radius:12px;
+  }
+  .result-label { color:var(--muted); font-size:0.9rem; }
+  .result-value { font-weight:700; font-size:1.1rem; }
+  .result-value.gold { color:var(--gold); }
+  .result-value.green { color:var(--green); }
+  .result-value.accent { color:var(--accent2); }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background:var(--dark2); border-top:1px solid var(--border);
+    padding:60px 5% 30px;
+  }
+  .footer-grid {
+    display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; margin-bottom:3rem;
+  }
+  .footer-brand .logo { font-size:1.4rem; display:block; margin-bottom:1rem; }
+  .footer-brand p { color:var(--muted); font-size:0.9rem; line-height:1.8; max-width:280px; }
+  .footer-col h4 { font-weight:700; margin-bottom:1.2rem; }
+  .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:0.7rem; }
+  .footer-col ul li a { color:var(--muted); text-decoration:none; font-size:0.9rem; transition:color 0.2s; }
+  .footer-col ul li a:hover { color:var(--gold); }
+  .footer-bottom {
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:2rem; border-top:1px solid var(--border);
+    color:var(--muted); font-size:0.85rem;
+  }
+
+  /* ---- SCROLL TO TOP ---- */
+  .scroll-top {
+    position:fixed; bottom:2rem; left:2rem; z-index:99;
+    width:48px; height:48px; border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:white; border:none; cursor:pointer; font-size:1.2rem;
+    display:flex; align-items:center; justify-content:center;
+    transition:all 0.3s; opacity:0; transform:translateY(20px);
+    box-shadow:0 4px 15px rgba(124,58,237,0.4);
+  }
+  .scroll-top.visible { opacity:1; transform:translateY(0); }
+  .scroll-top:hover { transform:translateY(-4px); }
+
+  /* ---- RESPONSIVE ---- */
+  @media(max-width:768px) {
+    nav ul { display:none; }
+    .guide-grid { grid-template-columns:1fr; }
+    .guide-card:nth-child(5) { grid-column:auto; }
+    .calc-wrap { grid-template-columns:1fr; }
+    .footer-grid { grid-template-columns:1fr 1fr; }
+    .hero-stats { gap:1.5rem; }
+  }
+
+  /* ---- LOADING OVERLAY ---- */
+  .loading-overlay {
+    position:fixed; inset:0; z-index:999;
+    background:var(--dark);
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:1rem;
+    transition:opacity 0.5s, visibility 0.5s;
+  }
+  .loading-overlay.done { opacity:0; visibility:hidden; }
+  .loader {
+    width:60px; height:60px; border-radius:50%;
+    border:3px solid rgba(245,200,66,0.1);
+    border-top-color:var(--gold);
+    animation:spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .loading-text { color:var(--muted); font-size:0.9rem; letter-spacing:2px; text-transform:uppercase; }
+
+  /* ---- NOTIFICATION TOAST ---- */
+  .toast {
+    position:fixed; bottom:2rem; right:2rem; z-index:200;
+    background:var(--card); border:1px solid rgba(245,200,66,0.3);
+    border-radius:16px; padding:1rem 1.5rem;
+    display:flex; align-items:center; gap:1rem;
+    transform:translateX(200%); transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    max-width:320px; box-shadow:0 8px 30px rgba(0,0,0,0.5);
+  }
+  .toast.show { transform:translateX(0); }
+  .toast-icon { font-size:1.5rem; }
+  .toast-text { font-size:0.9rem; font-weight:600; }
+
+  /* Tab system */
+  .tabs { display:flex; gap:0.5rem; margin-bottom:2rem; background:var(--card); padding:0.5rem; border-radius:14px; width:fit-content; }
+  .tab-btn {
+    padding:0.6rem 1.5rem; border-radius:10px; border:none; background:transparent;
+    color:var(--muted); cursor:pointer; font-family:'Cairo',sans-serif; font-weight:600; font-size:0.9rem;
+    transition:all 0.2s;
+  }
+  .tab-btn.active { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:white; }
+  .tab-content { display:none; }
+  .tab-content.active { display:block; animation:fadeUp 0.4s ease both; }
+
+  /* Progress bar */
+  .progress-bar {
+    height:4px; background:var(--dark3); border-radius:2px; overflow:hidden; margin-top:0.75rem;
+  }
+  .progress-fill {
+    height:100%; background:linear-gradient(90deg,var(--accent),var(--gold));
+    border-radius:2px; transition:width 1s ease;
+  }
+</style>
+</head>
+<body>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loader">
+  <div style="font-size:3rem;margin-bottom:0.5rem;">⚡</div>
+  <div class="loader"></div>
+  <div class="loading-text">جاري التحميل...</div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <div class="toast-icon" id="toastIcon">✨</div>
+  <div class="toast-text" id="toastText"></div>
+</div>
+
+<!-- Scroll Top -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- Navbar -->
+<nav>
+  <div class="logo">فريلانس<span>✦</span>أكاديمي</div>
+  <ul>
+    <li><a href="#skills">المهارات</a></li>
+    <li><a href="#roadmap">خارطة الطريق</a></li>
+    <li><a href="#resources">مصادر التعلم</a></li>
+    <li><a href="#guide">دليل العمل الحر</a></li>
+    <li><a href="#platforms">المنصات</a></li>
+    <li><a href="#advisor" class="nav-cta">استشر AI</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="floating-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">منصة العمل الحر المتكاملة</div>
+    <h1 class="hero-title">
+      حوّل مهارتك إلى<br>
+      <span class="highlight">دخل لا محدود</span>
+    </h1>
+    <p class="hero-sub">
+      تعلم أي مهارة، اكتشف أفضل مصادر التعلم، وابدأ رحلتك في العمل الحر
+      خطوة بخطوة مع دليل متكامل وذكاء اصطناعي يرشدك في كل مرحلة
+    </p>
+    <div class="hero-actions">
+      <a href="#skills" class="btn-primary">🚀 ابدأ رحلتك الآن</a>
+      <a href="#guide" class="btn-secondary">📖 تعلم أساسيات الفريلانس</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num" data-target="50">0</div>
+        <div class="stat-label">مهارة متاحة</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-target="200">0</div>
+        <div class="stat-label">مصدر تعليمي</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-target="12">0</div>
+        <div class="stat-label">منصة عمل حر</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-target="95" data-suffix="%">0</div>
+        <div class="stat-label">نسبة رضا المستخدمين</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills">
+  <div class="section-tag">اختر مهارتك</div>
+  <h2 class="section-title">أي مهارة تريد <span class="g">تعلمها؟</span></h2>
+  <p class="section-sub">اختر المهارة التي تهمك وسنوفر لك خارطة طريق كاملة ومصادر تعلم مخصصة</p>
+
+  <div class="skill-search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" class="skill-search" id="skillSearch" placeholder="ابحث عن مهارة... مثال: تصميم، برمجة، ترجمة" oninput="filterSkills(this.value)">
+  </div>
+
+  <div class="skill-categories">
+    <button class="cat-btn active" onclick="filterCat('all', this)">الكل</button>
+    <button class="cat-btn" onclick="filterCat('tech', this)">💻 تقنية</button>
+    <button class="cat-btn" onclick="filterCat('design', this)">🎨 تصميم</button>
+    <button class="cat-btn" onclick="filterCat('marketing', this)">📈 تسويق</button>
+    <button class="cat-btn" onclick="filterCat('writing', this)">✍️ كتابة</button>
+    <button class="cat-btn" onclick="filterCat('business', this)">💼 أعمال</button>
+    <button class="cat-btn" onclick="filterCat('video', this)">🎬 فيديو</button>
+    <button class="cat-btn" onclick="filterCat('other', this)">🌟 أخرى</button>
+  </div>
+
+  <div class="skills-grid" id="skillsGrid"></div>
+</section>
+
+<!-- Roadmap Section -->
+<section id="roadmap">
+  <div class="section-tag">خارطة الطريق</div>
+  <h2 class="section-title">مسارك نحو <span class="g">الاحتراف</span></h2>
+  <p class="section-sub">اختر مهارة من الأعلى لتظهر خارطة طريق مخصصة خطوة بخطوة</p>
+
+  <div class="roadmap-container" id="defaultRoadmap">
+    <div style="text-align:center;padding:4rem;color:var(--muted);">
+      <div style="font-size:4rem;margin-bottom:1rem;">🗺️</div>
+      <p style="font-size:1.1rem;">اختر مهارة من القائمة أعلاه لتظهر خارطة طريقك هنا</p>
+    </div>
+  </div>
+
+  <div class="roadmap-container active" id="roadmapContent">
+    <div id="roadmapInner"></div>
+  </div>
+</section>
+
+<!-- Resources Section -->
+<section id="resources">
+  <div class="section-tag">مصادر التعلم</div>
+  <h2 class="section-title">أفضل <span class="g">مصادر التعلم</span></h2>
+  <p class="section-sub">مجموعة منتقاة من أفضل المصادر المجانية والمدفوعة بالعربي والإنجليزي</p>
+
+  <div class="resources-filter">
+    <button class="res-filter-btn active" onclick="filterResources('all', this)">الكل</button>
+    <button class="res-filter-btn" onclick="filterResources('free', this)">🆓 مجاني</button>
+    <button class="res-filter-btn" onclick="filterResources('paid', this)">💎 مدفوع</button>
+    <button class="res-filter-btn" onclick="filterResources('arabic', this)">🌍 عربي</button>
+    <button class="res-filter-btn" onclick="filterResources('video', this)">📺 فيديو</button>
+    <button class="res-filter-btn" onclick="filterResources('course', this)">📚 كورسات</button>
+  </div>
+
+  <div class="resources-grid" id="resourcesGrid"></div>
+</section>
+
+<!-- Guide Section -->
+<section id="guide">
+  <div class="section-tag">دليل العمل الحر</div>
+  <h2 class="section-title">كيف تبدأ <span class="g">العمل الحر؟</span></h2>
+  <p class="section-sub">كل ما تحتاج معرفته لتبدأ رحلتك بثقة وتحترف مجال الفريلانس</p>
+
+  <div class="guide-grid">
+    <div class="guide-card">
+      <div class="guide-icon">🎯</div>
+      <h3>بناء ملفك الشخصي الاحترافي</h3>
+      <p>ملفك الشخصي هو واجهتك للعملاء، يجب أن يكون احترافياً وجذاباً</p>
+      <div class="guide-tips">
+        <div class="guide-tip">استخدم صورة شخصية احترافية وواضحة</div>
+        <div class="guide-tip">اكتب نبذة مقنعة تبرز مهاراتك وخبراتك</div>
+        <div class="guide-tip">أضف نماذج من أعمالك السابقة حتى لو كانت مشاريع شخصية</div>
+        <div class="guide-tip">حدد تخصصك بدقة بدلاً من أن تكون عاماً</div>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-icon">💰</div>
+      <h3>تحديد أسعارك بذكاء</h3>
+      <p>التسعير الصحيح هو مفتاح النجاح في العمل الحر</p>
+      <div class="guide-tips">
+        <div class="guide-tip">ابحث عن متوسط أسعار السوق لمهارتك</div>
+        <div class="guide-tip">ابدأ بأسعار تنافسية للحصول على تقييمات</div>
+        <div class="guide-tip">ارفع أسعارك تدريجياً مع بناء سمعتك</div>
+        <div class="guide-tip">لا تنافس في السعر المنخفض، نافس في الجودة</div>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-icon">📩</div>
+      <h3>كتابة عروض فائزة</h3>
+      <p>كيف تكتب عرضاً يجعل العميل يختارك من بين عشرات المنافسين</p>
+      <div class="guide-tips">
+        <div class="guide-tip">اقرأ المشروع بعناية وخاطب احتياج العميل تحديداً</div>
+        <div class="guide-tip">اعرض قيمة واضحة وليس فقط سعراً</div>
+        <div class="guide-tip">أضف أمثلة على أعمال مشابهة</div>
+        <div class="guide-tip">كن مختصراً ومباشراً في العرض الأول</div>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-icon">⭐</div>
+      <h3>بناء السمعة والتقييمات</h3>
+      <p>التقييمات هي عملتك في العمل الحر، استثمر فيها منذ اليوم الأول</p>
+      <div class="guide-tips">
+        <div class="guide-tip">قدم جودة تفوق توقعات العميل دائماً</div>
+        <div class="guide-tip">التزم بالمواعيد النهائية بدون أعذار</div>
+        <div class="guide-tip">تواصل بشكل منتظم وواضح مع العميل</div>
+        <div class="guide-tip">اطلب التقييم بلطف بعد إتمام العمل</div>
+      </div>
+    </div>
+    <div class="guide-card" style="grid-column:1/-1">
+      <div class="guide-icon">🗓️</div>
+      <h3>إدارة الوقت والمشاريع</h3>
+      <p>العمل الحر يتطلب انضباطاً ذاتياً عالياً لإدارة مشاريع متعددة</p>
+      <div class="guide-tips" style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem 2rem;">
+        <div class="guide-tip">استخدم أدوات إدارة المهام مثل Notion أو Trello</div>
+        <div class="guide-tip">خصص وقتاً ثابتاً للعمل كل يوم</div>
+        <div class="guide-tip">قسم المشاريع الكبيرة إلى مهام صغيرة</div>
+        <div class="guide-tip">ضع هامش وقت إضافي للمراجعات والتعديلات</div>
+        <div class="guide-tip">لا تقبل أكثر من طاقتك الفعلية</div>
+        <div class="guide-tip">تعلم قول "لا" للعملاء الغير مناسبين</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Platforms Section -->
+<section id="platforms">
+  <div class="section-tag">منصات العمل الحر</div>
+  <h2 class="section-title">أفضل <span class="g">المنصات العالمية</span></h2>
+  <p class="section-sub">المنصات الأفضل للبدء وكيف تختار المناسب لمهارتك</p>
+
+  <div class="platforms-grid" id="platformsGrid"></div>
+</section>
+
+<!-- AI Advisor -->
+<section id="advisor">
+  <div class="section-tag">المستشار الذكي</div>
+  <h2 class="section-title">استشر <span class="g">الذكاء الاصطناعي</span></h2>
+  <p class="section-sub">اسأل مستشارنا الذكي عن أي شيء يخص العمل الحر ومهارتك</p>
+
+  <div class="advisor-wrap">
+    <div class="advisor-card">
+      <div class="advisor-header">
+        <div class="advisor-avatar">🤖</div>
+        <div class="advisor-info">
+          <h3>مستشار الفريلانس الذكي</h3>
+          <p>متخصص في توجيه الفريلانسرز نحو النجاح</p>
+          <div class="advisor-online">متاح الآن</div>
+        </div>
+      </div>
+      <div class="advisor-messages" id="chatMessages">
+        <div class="msg msg-bot">
+          مرحباً! 👋 أنا مستشارك في مجال العمل الحر. يمكنني مساعدتك في:
+          <br>• اختيار المهارة المناسبة لك
+          <br>• وضع خارطة طريق للتعلم
+          <br>• نصائح للبدء في منصات الفريلانس
+          <br>• تحسين ملفك الشخصي وعروضك
+          <br><br>كيف يمكنني مساعدتك اليوم؟
+        </div>
+        <div class="typing-indicator" id="typingIndicator">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="quick-questions">
+        <button class="quick-q" onclick="sendQuick('من أين أبدأ في العمل الحر؟')">من أين أبدأ؟</button>
+        <button class="quick-q" onclick="sendQuick('ما أفضل مهارة للعمل الحر عربياً؟')">أفضل مهارة</button>
+        <button class="quick-q" onclick="sendQuick('كيف أحدد سعري كفريلانسر مبتدئ؟')">تحديد السعر</button>
+        <button class="quick-q" onclick="sendQuick('كيف أحصل على أول عميل في Upwork؟')">أول عميل</button>
+      </div>
+      <div class="advisor-input-wrap">
+        <textarea class="advisor-input" id="chatInput" placeholder="اكتب سؤالك هنا..." rows="1"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}"
+          oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+        <button class="send-btn" onclick="sendMessage()">➤</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Rate Calculator -->
+<section id="calculator" style="background:var(--dark)">
+  <div class="section-tag">حاسبة الدخل</div>
+  <h2 class="section-title">احسب <span class="g">دخلك المتوقع</span></h2>
+  <p class="section-sub">احسب كم يمكنك كسبه شهرياً بناءً على مهارتك وخبرتك</p>
+
+  <div class="calc-wrap">
+    <div class="calc-form">
+      <h4 style="font-weight:700;font-size:1.1rem;">بيانات الحساب</h4>
+      <div class="calc-field">
+        <label>المهارة</label>
+        <select id="calcSkill" onchange="calculate()">
+          <option value="webdev">تطوير الويب</option>
+          <option value="design">تصميم جرافيك</option>
+          <option value="marketing">تسويق رقمي</option>
+          <option value="writing">كتابة محتوى</option>
+          <option value="video">مونتاج فيديو</option>
+          <option value="translation">ترجمة</option>
+          <option value="uiux">UI/UX</option>
+          <option value="seo">SEO</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label>مستوى الخبرة</label>
+        <select id="calcLevel" onchange="calculate()">
+          <option value="beginner">مبتدئ (0-1 سنة)</option>
+          <option value="intermediate">متوسط (1-3 سنوات)</option>
+          <option value="advanced">متقدم (3-5 سنوات)</option>
+          <option value="expert">خبير (+5 سنوات)</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label>ساعات العمل أسبوعياً: <strong id="hoursLabel" style="color:var(--gold)">20</strong> ساعة</label>
+        <input type="range" id="calcHours" min="5" max="60" value="20" oninput="document.getElementById('hoursLabel').textContent=this.value;calculate()">
+      </div>
+      <div class="calc-field">
+        <label>المنصة المستهدفة</label>
+        <select id="calcPlatform" onchange="calculate()">
+          <option value="upwork">Upwork</option>
+          <option value="fiverr">Fiverr</option>
+          <option value="freelancer">Freelancer</option>
+          <option value="khamsat">خمسات</option>
+          <option value="mostaql">مستقل</option>
+        </select>
+      </div>
+      <button class="calc-btn" onclick="calculate()">🔢 احسب الآن</button>
+    </div>
+    <div class="calc-result">
+      <h4>النتيجة المتوقعة</h4>
+      <div class="result-item">
+        <span class="result-label">السعر بالساعة (USD)</span>
+        <span class="result-value gold" id="rHourly">$0</span>
+      </div>
+      <div class="result-item">
+        <span class="result-label">الدخل الأسبوعي</span>
+        <span class="result-value accent" id="rWeekly">$0</span>
+      </div>
+      <div class="result-item">
+        <span class="result-label">الدخل الشهري</span>
+        <span class="result-value green" id="rMonthly">$0</span>
+      </div>
+      <div class="result-item">
+        <span class="result-label">الدخل السنوي</span>
+        <span class="result-value gold" id="rYearly">$0</span>
+      </div>
+      <div style="padding:1rem;background:rgba(245,200,66,0.05);border-radius:12px;border:1px solid rgba(245,200,66,0.1);margin-top:0.5rem;">
+        <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;" id="calcNote">
+          هذا تقدير تقريبي بناءً على متوسطات السوق. قد تختلف الأرقام الفعلية حسب الجودة والسمعة.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">فريلانس<span style="-webkit-text-fill-color:var(--gold);background:none">✦</span>أكاديمي</span>
+      <p>منصتك المتكاملة لتعلم العمل الحر. نساعدك على تحويل مهاراتك إلى مصدر دخل حقيقي ومستدام.</p>
+    </div>
+    <div class="footer-col">
+      <h4>روابط سريعة</h4>
+      <ul>
+        <li><a href="#skills">المهارات</a></li>
+        <li><a href="#roadmap">خارطة الطريق</a></li>
+        <li><a href="#resources">المصادر</a></li>
+        <li><a href="#guide">الدليل</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>المنصات</h4>
+      <ul>
+        <li><a href="https://upwork.com" target="_blank">Upwork</a></li>
+        <li><a href="https://fiverr.com" target="_blank">Fiverr</a></li>
+        <li><a href="https://mostaql.com" target="_blank">مستقل</a></li>
+        <li><a href="https://khamsat.com" target="_blank">خمسات</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>التواصل</h4>
+      <ul>
+        <li><a href="#">إنستغرام</a></li>
+        <li><a href="#">تويتر/X</a></li>
+        <li><a href="#">يوتيوب</a></li>
+        <li><a href="#">تيليغرام</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 فريلانس أكاديمي. جميع الحقوق محفوظة.</span>
+    <span style="color:var(--gold)">صُنع بـ ❤️ للمجتمع العربي</span>
+  </div>
+</footer>
+
+<script>
+// ===== DATA =====
+const skills = [
+  {id:'webdev', name:'تطوير الويب', icon:'💻', cat:'tech', demand:'طلب عالي جداً', avg:'$40-120/ساعة'},
+  {id:'react', name:'React / Frontend', icon:'⚛️', cat:'tech', demand:'طلب عالي جداً', avg:'$45-130/ساعة'},
+  {id:'flutter', name:'Flutter / موبايل', icon:'📱', cat:'tech', demand:'طلب متزايد', avg:'$40-110/ساعة'},
+  {id:'python', name:'Python / بايثون', icon:'🐍', cat:'tech', demand:'طلب عالي جداً', avg:'$50-140/ساعة'},
+  {id:'wordpres', name:'WordPress', icon:'🌐', cat:'tech', demand:'طلب مستمر', avg:'$25-70/ساعة'},
+  {id:'uiux', name:'تصميم UI/UX', icon:'🎨', cat:'design', demand:'طلب عالي جداً', avg:'$40-120/ساعة'},
+  {id:'logo', name:'تصميم الهوية', icon:'✏️', cat:'design', demand:'طلب عالي', avg:'$25-80/ساعة'},
+  {id:'motiondesign', name:'موشن جرافيك', icon:'🎬', cat:'design', demand:'طلب متزايد', avg:'$35-100/ساعة'},
+  {id:'graphicdesign', name:'جرافيك ديزاين', icon:'🖼️', cat:'design', demand:'طلب مستمر', avg:'$20-60/ساعة'},
+  {id:'seo', name:'تحسين SEO', icon:'🔍', cat:'marketing', demand:'طلب عالي', avg:'$30-90/ساعة'},
+  {id:'socialm', name:'إدارة السوشيال', icon:'📲', cat:'marketing', demand:'طلب عالي', avg:'$20-70/ساعة'},
+  {id:'ads', name:'إعلانات مدفوعة', icon:'💰', cat:'marketing', demand:'طلب عالي جداً', avg:'$40-120/ساعة'},
+  {id:'emailm', name:'Email Marketing', icon:'📧', cat:'marketing', demand:'طلب مستمر', avg:'$25-75/ساعة'},
+  {id:'copywrite', name:'كتابة الإعلانات', icon:'📝', cat:'writing', demand:'طلب عالي', avg:'$25-80/ساعة'},
+  {id:'content', name:'كتابة المحتوى', icon:'✍️', cat:'writing', demand:'طلب مستمر', avg:'$15-50/ساعة'},
+  {id:'translation', name:'الترجمة', icon:'🌍', cat:'writing', demand:'طلب مستمر', avg:'$15-45/ساعة'},
+  {id:'scriptwrite', name:'كتابة السيناريو', icon:'🎭', cat:'writing', demand:'طلب متزايد', avg:'$30-80/ساعة'},
+  {id:'pm', name:'إدارة المشاريع', icon:'📊', cat:'business', demand:'طلب عالي', avg:'$35-100/ساعة'},
+  {id:'va', name:'مساعد افتراضي', icon:'🎧', cat:'business', demand:'طلب مستمر', avg:'$10-40/ساعة'},
+  {id:'dataentry', name:'إدخال البيانات', icon:'📋', cat:'business', demand:'طلب مستمر', avg:'$8-25/ساعة'},
+  {id:'videoedit', name:'مونتاج فيديو', icon:'🎥', cat:'video', demand:'طلب عالي جداً', avg:'$30-90/ساعة'},
+  {id:'youtube', name:'إنتاج يوتيوب', icon:'▶️', cat:'video', demand:'طلب متزايد', avg:'$25-80/ساعة'},
+  {id:'reels', name:'تصميم ريلز', icon:'📸', cat:'video', demand:'طلب عالي جداً', avg:'$20-70/ساعة'},
+  {id:'voiceover', name:'تسجيل صوتي', icon:'🎙️', cat:'other', demand:'طلب مستمر', avg:'$20-60/ساعة'},
+  {id:'excel', name:'Excel / تحليل بيانات', icon:'📊', cat:'tech', demand:'طلب عالي', avg:'$25-70/ساعة'},
+];
+
+const roadmaps = {
+  webdev: {
+    steps:[
+      {title:'أساسيات HTML & CSS', desc:'تعلم بناء صفحات الويب الأساسية وتنسيقها، وتعلم Flexbox وGrid', duration:'4-6 أسابيع'},
+      {title:'JavaScript الأساسي', desc:'تعلم أساسيات البرمجة، DOM manipulation، والـ Events', duration:'6-8 أسابيع'},
+      {title:'إطار عمل (React أو Vue)', desc:'تعلم مكتبة أو إطار عمل حديث لبناء تطبيقات ويب تفاعلية', duration:'6-8 أسابيع'},
+      {title:'Backend أساسي (Node.js)', desc:'تعلم بناء APIs بسيطة وقواعد البيانات', duration:'6-8 أسابيع'},
+      {title:'بناء مشاريع Portfolio', desc:'ابنِ 3-5 مشاريع حقيقية تعرضها للعملاء', duration:'4-6 أسابيع'},
+      {title:'الانضمام لمنصات الفريلانس', desc:'أنشئ حسابك في Upwork وFreelancer وابدأ التقديم', duration:'مستمر'},
+    ]
+  },
+  uiux: {
+    steps:[
+      {title:'أساسيات تصميم UI', desc:'تعلم نظريات اللون والتايبوغرافي والتخطيط البصري', duration:'3-4 أسابيع'},
+      {title:'Figma باحتراف', desc:'إتقان أداة Figma من التصميم للبروتوتايب', duration:'4-6 أسابيع'},
+      {title:'مبادئ تجربة المستخدم UX', desc:'تعلم User Research وWireframing وUser Testing', duration:'4-6 أسابيع'},
+      {title:'نظام التصميم Design Systems', desc:'تعلم بناء مكتبات مكونات قابلة للتوسع', duration:'3-4 أسابيع'},
+      {title:'بناء Portfolio متميز', desc:'صمم 4-6 دراسات حالة احترافية تبين عمليتك', duration:'4-6 أسابيع'},
+      {title:'ابدأ في Upwork و Dribbble', desc:'أنشئ حساباتك واعرض أعمالك ابدأ التقديم', duration:'مستمر'},
+    ]
+  },
+  default: {
+    steps:[
+      {title:'أتقن أساسيات المهارة', desc:'ابدأ بتعلم الأساسيات والمفاهيم الجوهرية للمهارة المختارة', duration:'4-8 أسابيع'},
+      {title:'التطبيق العملي', desc:'طبق ما تعلمته على مشاريع شخصية وتحديات عملية', duration:'4-6 أسابيع'},
+      {title:'ارفع مستواك للاحتراف', desc:'تعلم تقنيات متقدمة واطلع على أحدث اتجاهات المجال', duration:'6-10 أسابيع'},
+      {title:'ابنِ Portfolio قوي', desc:'اجمع أفضل أعمالك في ملف احترافي يستعرض مهاراتك', duration:'3-4 أسابيع'},
+      {title:'أنشئ حساباتك في المنصات', desc:'سجل في Upwork وFiverr وابدأ في بناء ملفك الشخصي', duration:'أسبوع'},
+      {title:'ابدأ التقديم والتطوير المستمر', desc:'قدم على مشاريع صغيرة لبناء سمعتك وتحسين خبرتك', duration:'مستمر'},
+    ]
+  }
+};
+
+const resources = [
+  {name:'Udemy', desc:'أكبر منصة كورسات مدفوعة بأسعار رمزية، تغطي آلاف المهارات', icon:'🎓', type:'paid', cat:'course', rating:'4.8', link:'https://udemy.com'},
+  {name:'Coursera', desc:'كورسات من أفضل جامعات العالم مع شهادات معتمدة مجاناً وبالاشتراك', icon:'🏛️', type:'paid', cat:'course', rating:'4.7', link:'https://coursera.org'},
+  {name:'YouTube - عربي', desc:'آلاف المحاضرين العرب يقدمون محتوى تعليمي مجاني ومتميز', icon:'▶️', type:'free', cat:'video', rating:'4.6', link:'https://youtube.com'},
+  {name:'freeCodeCamp', desc:'تعلم البرمجة مجاناً مع شهادات معتمدة لمطوري الويب', icon:'💻', type:'free', cat:'course', rating:'4.9', link:'https://freecodecamp.org'},
+  {name:'Elzero Web School', desc:'من أفضل قنوات تعليم البرمجة بالعربي - محتوى مجاني واحترافي', icon:'🌟', type:'free', cat:'video', rating:'5.0', link:'https://youtube.com/@ElzeroWebSchool', arabic:true},
+  {name:'Figma Community', desc:'تعلم التصميم مجاناً مع آلاف القوالب والدروس المفتوحة', icon:'🎨', type:'free', cat:'course', rating:'4.7', link:'https://figma.com/community'},
+  {name:'Google Digital Garage', desc:'كورسات رقمية مجانية من Google مع شهادات معتمدة', icon:'🔷', type:'free', cat:'course', rating:'4.6', link:'https://learndigital.withgoogle.com'},
+  {name:'Skillshare', desc:'منصة للمهارات الإبداعية مع آلاف الكورسات بالاشتراك الشهري', icon:'✏️', type:'paid', cat:'course', rating:'4.5', link:'https://skillshare.com'},
+  {name:'LinkedIn Learning', desc:'تعلم مهارات احترافية مع شهادات تضاف لملفك في LinkedIn', icon:'💼', type:'paid', cat:'course', rating:'4.6', link:'https://linkedin.com/learning'},
+  {name:'مدرسة المحترفين', desc:'منصة عربية متخصصة في تعليم ريادة الأعمال والعمل الحر', icon:'🏫', type:'paid', cat:'course', rating:'4.7', link:'https://mohtrif.com', arabic:true},
+  {name:'Khan Academy', desc:'تعلم مجاناً - من الرياضيات للبرمجة والأعمال', icon:'📚', type:'free', cat:'course', rating:'4.8', link:'https://khanacademy.org'},
+  {name:'MDN Web Docs', desc:'المرجع الأساسي المجاني لكل مطور ويب - توثيق شامل', icon:'🦊', type:'free', cat:'course', rating:'5.0', link:'https://developer.mozilla.org'},
+];
+
+const platforms = [
+  {name:'Upwork', logo:'💼', desc:'أكبر منصة عمل حر في العالم للمشاريع الكبيرة والطويلة', features:['للمشاريع المتوسطة والكبيرة','نظام تقييم وسمعة قوي','عقود واتفاقيات احترافية','دفع آمن مضمون'], link:'https://upwork.com'},
+  {name:'Fiverr', logo:'🟢', desc:'الأفضل لبيع الخدمات المحددة (Gigs) للمبتدئين والمحترفين', features:['سهل للمبتدئين','خدمات محددة وسريعة','جمهور عالمي ضخم','تسويق ذاتي للخدمات'], link:'https://fiverr.com'},
+  {name:'مستقل', logo:'🌙', desc:'أكبر منصة عربية للعمل الحر - آلاف المشاريع يومياً', features:['الأفضل للعملاء العرب','دعم بالعربية كامل','مشاريع متنوعة','بيئة عمل عربية'], link:'https://mostaql.com'},
+  {name:'خمسات', logo:'5️⃣', desc:'منصة عربية لبيع الخدمات الصغيرة بدءاً من 5 دولار', features:['مثالية للمبتدئين','خدمات سريعة ومحددة','تنويع مصادر الدخل','سهولة الاستخدام'], link:'https://khamsat.com'},
+  {name:'Freelancer', logo:'🔵', desc:'منصة عالمية ضخمة بملايين المشاريع في كل التخصصات', features:['أكبر قاعدة مستخدمين','مسابقات التصميم','مشاريع فورية','تنوع كبير'], link:'https://freelancer.com'},
+  {name:'Toptal', logo:'⚡', desc:'للخبراء فقط - نخبة الفريلانسرز بأعلى الأسعار', features:['للمحترفين الخبراء فقط','عملاء Fortune 500','أعلى الأسعار عالمياً','معدل قبول 3%'], link:'https://toptal.com'},
+];
+
+// ===== RENDER =====
+function renderSkills(filtered = skills) {
+  const grid = document.getElementById('skillsGrid');
+  grid.innerHTML = filtered.map(s => `
+    <div class="skill-card" onclick="selectSkill('${s.id}', '${s.name}')" id="skill-${s.id}">
+      <div class="skill-icon">${s.icon}</div>
+      <div class="skill-name">${s.name}</div>
+      <div class="skill-demand">${s.demand}</div>
+      <div class="skill-avg">${s.avg}</div>
+    </div>
+  `).join('');
+}
+
+function renderResources(filtered = resources) {
+  const grid = document.getElementById('resourcesGrid');
+  const thumbColors = ['#1a1a3a','#1a2a1a','#2a1a1a','#1a2a2a','#2a1a2a','#2a2a1a'];
+  grid.innerHTML = filtered.map((r,i) => `
+    <div class="resource-card">
+      <div class="resource-thumb" style="background:${thumbColors[i%thumbColors.length]}">
+        <span style="position:relative;z-index:1">${r.icon}</span>
+      </div>
+      <div class="resource-body">
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+          <span class="resource-type ${r.type==='free'?'type-free':r.type==='arabic'?'type-arabic':'type-paid'}">
+            ${r.type==='free'?'🆓 مجاني':r.type==='arabic'?'🌍 عربي':'💎 مدفوع'}
+          </span>
+          ${r.arabic?'<span class="resource-type type-arabic">🌍 عربي</span>':''}
+        </div>
+        <div class="resource-name">${r.name}</div>
+        <div class="resource-desc">${r.desc}</div>
+        <div class="resource-meta">
+          <div class="resource-rating">⭐ ${r.rating}</div>
+          <a href="${r.link}" target="_blank" class="resource-link">زيارة ←</a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderPlatforms() {
+  const grid = document.getElementById('platformsGrid');
+  grid.innerHTML = platforms.map(p => `
+    <div class="platform-card">
+      <div class="platform-logo">${p.logo}</div>
+      <div class="platform-name">${p.name}</div>
+      <div class="platform-desc">${p.desc}</div>
+      <div class="platform-features">
+        ${p.features.map(f=>`<div class="platform-feature">${f}</div>`).join('')}
+      </div>
+      <a href="${p.link}" target="_blank" class="platform-link">ابدأ الآن ✦</a>
+    </div>
+  `).join('');
+}
+
+// ===== SKILL SELECTION =====
+function selectSkill(id, name) {
+  // Deselect all
+  document.querySelectorAll('.skill-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('skill-'+id).classList.add('selected');
+
+  // Show roadmap
+  const map = roadmaps[id] || roadmaps.default;
+  const inner = document.getElementById('roadmapInner');
+  inner.innerHTML = `
+    <div class="roadmap-title">
+      <h3>خارطة طريق</h3>
+      <div class="skill-badge">${name}</div>
+    </div>
+    <div class="roadmap-steps">
+      ${map.steps.map((s,i) => `
+        <div class="roadmap-step" style="animation:fadeUp 0.4s ${i*0.1}s ease both">
+          <div class="step-num">${i+1}</div>
+          <div class="step-content">
+            <h4>${s.title}</h4>
+            <p>${s.desc}</p>
+            <div class="step-duration">⏱ ${s.duration}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  document.getElementById('roadmapContent').classList.add('active');
+  document.getElementById('roadmapContent').scrollIntoView({behavior:'smooth', block:'start'});
+  showToast('تم تحديد مهارة: ' + name, '🎯');
+}
+
+// ===== FILTERS =====
+function filterSkills(query) {
+  const q = query.toLowerCase();
+  const filtered = skills.filter(s => s.name.toLowerCase().includes(q));
+  renderSkills(filtered);
+}
+
+function filterCat(cat, btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = cat === 'all' ? skills : skills.filter(s => s.cat === cat);
+  renderSkills(filtered);
+  document.getElementById('skillSearch').value = '';
+}
+
+function filterResources(type, btn) {
+  document.querySelectorAll('.res-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  let filtered;
+  if(type==='all') filtered = resources;
+  else if(type==='arabic') filtered = resources.filter(r => r.arabic || r.type==='arabic');
+  else if(type==='video') filtered = resources.filter(r => r.cat==='video');
+  else if(type==='course') filtered = resources.filter(r => r.cat==='course');
+  else filtered = resources.filter(r => r.type===type);
+  renderResources(filtered);
+}
+
+// ===== CALCULATOR =====
+const rateMap = {
+  webdev:{beginner:20,intermediate:40,advanced:70,expert:120},
+  design:{beginner:15,intermediate:30,advanced:55,expert:90},
+  marketing:{beginner:15,intermediate:30,advanced:55,expert:100},
+  writing:{beginner:10,intermediate:20,advanced:35,expert:60},
+  video:{beginner:15,intermediate:30,advanced:55,expert:90},
+  translation:{beginner:8,intermediate:15,advanced:25,expert:45},
+  uiux:{beginner:20,intermediate:40,advanced:70,expert:120},
+  seo:{beginner:15,intermediate:30,advanced:55,expert:90},
+};
+const platformFee = {upwork:0.8,fiverr:0.8,freelancer:0.85,khamsat:0.8,mostaql:0.85};
+
+function calculate() {
+  const skill = document.getElementById('calcSkill').value;
+  const level = document.getElementById('calcLevel').value;
+  const hours = parseInt(document.getElementById('calcHours').value);
+  const platform = document.getElementById('calcPlatform').value;
+
+  const baseRate = rateMap[skill][level];
+  const fee = platformFee[platform];
+  const net = baseRate * fee;
+  const weekly = net * hours;
+  const monthly = weekly * 4;
+  const yearly = monthly * 12;
+
+  document.getElementById('rHourly').textContent = `$${net.toFixed(0)}`;
+  document.getElementById('rWeekly').textContent = `$${weekly.toFixed(0)}`;
+  document.getElementById('rMonthly').textContent = `$${monthly.toFixed(0)}`;
+  document.getElementById('rYearly').textContent = `$${yearly.toFixed(0)}`;
+}
+
+// ===== AI CHAT =====
+const botResponses = {
+  'من أين أبدأ': `🚀 رحلتك في العمل الحر تبدأ من هنا:\n\n1️⃣ حدد مهارتك - ابدأ بما تعرفه أو ما تحبه\n2️⃣ تعلم وأتقن - استثمر 2-3 أشهر في التعلم الجاد\n3️⃣ ابنِ Portfolio - 3-5 مشاريع قوية كافية\n4️⃣ سجل في المنصات - Upwork للعملاء الغربيين، مستقل للعرب\n5️⃣ قدم بكثرة في البداية - الكمية تبني الخبرة\n\n📌 نصيحة: ركز على مهارة واحدة وأتقنها قبل التشعب`,
+  'أفضل مهارة': `🌟 المهارات الأعلى طلباً عربياً الآن:\n\n🥇 تطوير الويب - الطلب لا يتوقف والأسعار ممتازة\n🥈 UI/UX Design - نقص حاد في المتخصصين العرب\n🥉 إعلانات مدفوعة - كل شركة تحتاجه\n\n💡 بالنسبة للمبتدئ بالعربي:\n• كتابة المحتوى - سريع التعلم وطلب دائم\n• تصميم الجرافيك - دخل ممتاز بعد 6 أشهر تعلم\n• مونتاج الفيديو - الطلب تضاعف مع صعود ريلز`,
+  'تحديد السعر': `💰 كيف تحدد سعرك كمبتدئ:\n\n1. ابحث عن متوسط السوق لمهارتك في Upwork\n2. كمبتدئ: ضع سعراً أقل 20-30% من المتوسط\n3. بعد 5 تقييمات إيجابية: ارفع 20%\n4. كل 10 مشاريع: ارفع السعر مجدداً\n\n⚠️ لا تقل تحت:\n• تصميم شعار: $30\n• مقال 500 كلمة: $15\n• صفحة ويب بسيطة: $100\n\n🎯 هدف السنة الأولى: بناء التقييمات لا الدخل`,
+  'أول عميل': `🎯 أسرع طريقة لأول عميل في Upwork:\n\n✅ افعل هذا:\n• أكمل ملفك 100% مع صورة احترافية\n• قدم على 15-20 مشروع يومياً\n• اكتب عروضاً مخصصة لكل مشروع\n• ابدأ بمشاريع $50-150 صغيرة\n\n❌ لا تفعل:\n• تقديم عروض جاهزة ومكررة\n• تجاهل Connects الخاصة بك\n• رفض المشاريع الصغيرة في البداية\n\n💡 سر نجاح كثيرين: اقرأ المشروع جيداً وخاطب مشكلة العميل تحديداً`,
+};
+
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if(!msg) return;
+
+  addMessage(msg, 'user');
+  input.value = ''; input.style.height = 'auto';
+  showTyping();
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:`أنت مستشار خبير في مجال العمل الحر (Freelancing) للمجتمع العربي. أجب بالعربية دائماً. 
+        تخصصاتك: استراتيجيات العمل الحر، تعلم المهارات، المنصات (Upwork/Fiverr/مستقل/خمسات)، 
+        التسعير، بناء البورتفوليو، كتابة العروض، إدارة العملاء.
+        كن عملياً وموجزاً ومفيداً، استخدم الإيموجي بشكل معتدل.
+        الإجابة يجب أن تكون من 3-6 أسطر كحد أقصى.`,
+        messages:[{role:'user', content: msg}]
+      })
+    });
+    const data = await res.json();
+    hideTyping();
+    const text = data.content?.map(c=>c.text||'').join('') || getLocalResponse(msg);
+    addMessage(text, 'bot');
+  } catch(e) {
+    hideTyping();
+    addMessage(getLocalResponse(msg), 'bot');
+  }
+}
+
+function getLocalResponse(msg) {
+  for(const [key, val] of Object.entries(botResponses)) {
+    if(msg.includes(key)) return val;
+  }
+  return `شكراً على سؤالك! 💡\n\nللحصول على إجابة دقيقة حول "${msg}"، أنصحك بـ:\n\n• استخدام خارطة الطريق في الموقع للمهارات\n• الاطلاع على دليل العمل الحر المفصل\n• تصفح مصادر التعلم المتاحة\n\nهل لديك سؤال محدد عن مهارة أو منصة معينة؟ 🎯`;
+}
+
+function sendQuick(q) {
+  document.getElementById('chatInput').value = q;
+  sendMessage();
+}
+
+function addMessage(text, type) {
+  const messages = document.getElementById('chatMessages');
+  const msg = document.createElement('div');
+  msg.className = `msg msg-${type}`;
+  msg.style.animation = 'fadeUp 0.3s ease both';
+  msg.innerHTML = text.replace(/\n/g,'<br>');
+  messages.insertBefore(msg, document.getElementById('typingIndicator'));
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function showTyping() {
+  document.getElementById('typingIndicator').style.display = 'flex';
+  document.getElementById('chatMessages').scrollTop = 9999;
+}
+function hideTyping() {
+  document.getElementById('typingIndicator').style.display = 'none';
+}
+
+// ===== TOAST =====
+function showToast(text, icon='✨') {
+  const t = document.getElementById('toast');
+  document.getElementById('toastText').textContent = text;
+  document.getElementById('toastIcon').textContent = icon;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ===== COUNTER ANIMATION =====
+function animateCounters() {
+  document.querySelectorAll('[data-target]').forEach(el => {
+    const target = parseInt(el.dataset.target);
+    const suffix = el.dataset.suffix || '+';
+    let current = 0;
+    const step = target / 60;
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = Math.floor(current) + suffix;
+      if(current >= target) clearInterval(timer);
+    }, 20);
+  });
+}
+
+// ===== SCROLL TOP =====
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scrollTop');
+  if(window.scrollY > 500) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ===== INIT =====
+window.addEventListener('load', () => {
+  renderSkills();
+  renderResources();
+  renderPlatforms();
+  calculate();
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('done');
+    animateCounters();
+  }, 1200);
+
+  // Roadmap placeholder
+  document.getElementById('roadmapContent').classList.remove('active');
+  document.getElementById('roadmapInner').innerHTML = `
+    <div style="text-align:center;padding:4rem;color:var(--muted);">
+      <div style="font-size:4rem;margin-bottom:1rem;">🗺️</div>
+      <p style="font-size:1.1rem;">اختر مهارة من القائمة أعلاه لتظهر خارطة طريقك هنا</p>
+    </div>
+  `;
+  document.getElementById('roadmapContent').classList.add('active');
+});
+</script>
+</body>
+</html>
